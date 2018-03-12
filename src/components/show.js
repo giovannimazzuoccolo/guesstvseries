@@ -13,7 +13,7 @@ class Show extends Component {
 
 	componentDidMount() {
 				const fetchAsyncA = async () => {
-					let response = await fetch('https://api.themoviedb.org/3/discover/tv?api_key=a422dcafafb28f99930883fce6645dc2&language=en-US&sort_by=popularity.desc&page=1&timezone=America%2FNew_York&include_null_first_air_dates=false');
+					let response = await fetch('https://api.themoviedb.org/3/discover/tv?api_key=mykey&language=en-US&sort_by=popularity.desc&page=1&timezone=America%2FNew_York&include_null_first_air_dates=false');
 
 					let data = await response.json();
 
