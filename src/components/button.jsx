@@ -1,4 +1,15 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { loseLife } from '../actions/index';
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        notGuessed: () => {
+            dispatch(loseLife());
+        }
+    }
+}
+
 
 class ButtonAnswer extends Component {
     constructor(props){
@@ -16,9 +27,12 @@ class ButtonAnswer extends Component {
 		if(e === this.props.correctAnswer) {
 			console.log('isRight');
             this.setState({classBtn : 'btn-success'});
-            this.props.restart();
+            return true;
+            //this.props.restart();
 		} else {
-			this.setState({classBtn : 'btn-danger'});
+            this.setState({classBtn : 'btn-danger'});
+            this.props.notGuessed();
+            return false;
 		}
 	}
 
@@ -31,4 +45,4 @@ class ButtonAnswer extends Component {
 
 }
 
-export default ButtonAnswer;
+export default connect(null,mapDispatchToProps)(ButtonAnswer);

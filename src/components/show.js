@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 //import api
 import Api from '../api';
 
+
+
 //components
 import ImageC from './image.js';
 import ContainAnswers from './containAnswers.js';
@@ -69,6 +71,5 @@ class Show extends Component {
 	}
 
 }
-
 
 export default Show;
