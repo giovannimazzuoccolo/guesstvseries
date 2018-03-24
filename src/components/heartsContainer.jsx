@@ -1,31 +1,36 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-const mapStateToProps = (state) => {
-   console.log('isupd',state);
-    return { 'lives' : state.lives }
+const mapStateToProps = ({lives}) => {
+   console.log('isupd',lives);
+    return { 'lives' : lives }
 }
 
 class HeartsContainer extends Component {
     constructor(props){
         super(props)
-       
-        this.state = {lives : props.lives}
+
+        this.state = {lives : props.lives};
     }
 
+    componentWillReceiveProps({lives}) {
+        
+        this.setState({lives : lives.lives});
+    }
+ 
     /*initialState() {
         this.setState({lives : 3});
     }*/
 
-    //useful later
+    //useful later 
     /*removeHearts() {
         const countHearts = this.state.lives-1;
         this.setState({ lives : countHearts });
     }*/
 
     render () {
-        let heartsNumber = this.props.lives;
-        //console.log('realstate',this.props.lives);
+        let heartsNumber = this.state.lives;
+        console.log('realstate',this.props.lives);
         
         let listHearts = [];
         for( let i = 0; i < heartsNumber; i++) {

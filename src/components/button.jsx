@@ -2,21 +2,21 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { loseLife } from '../actions/index';
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        notGuessed: () => {
-            dispatch(loseLife());
-        }
-    }
-}
+const mapDispatchToProps = {
+    notGuessed: loseLife
+  }
 
+const mapStateToProps = ({lives}) => {
+    
+     return { lives }
+ }
 
 class ButtonAnswer extends Component {
     constructor(props){
     super(props)
     console.log('buttonProps',props);
 
-    this.state = { classBtn : 'btn-primary' }
+    this.state = { classBtn : 'btn-primary', lives : 3 }
 }
 
    
@@ -30,8 +30,9 @@ class ButtonAnswer extends Component {
             return true;
             //this.props.restart();
 		} else {
-            this.setState({classBtn : 'btn-danger'});
-            this.props.notGuessed();
+            
+            this.setState({classBtn : 'btn-danger', 'lives' : this.state.lives-1});
+            this.props.notGuessed(this.state.lives);
             return false;
 		}
 	}
@@ -45,4 +46,4 @@ class ButtonAnswer extends Component {
 
 }
 
-export default connect(null,mapDispatchToProps)(ButtonAnswer);
+export default connect(mapStateToProps,mapDispatchToProps)(ButtonAnswer);

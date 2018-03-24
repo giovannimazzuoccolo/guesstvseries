@@ -11,10 +11,10 @@ export function receiveAnswer (answer_id)  {
     }
 }
 
-export function loseLife() {
+export function loseLife(livesTot) {
     return {
         type : LOSE_LIFE,
-        lives : 2
+        lives : livesTot-1
     }
 }
 
