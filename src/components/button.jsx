@@ -7,7 +7,6 @@ const mapDispatchToProps = {
   }
 
 const mapStateToProps = ({lives}) => {
-    console.log('checkLives',{ lives });
      return { lives }
  }
 

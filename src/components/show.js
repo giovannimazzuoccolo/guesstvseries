@@ -9,6 +9,7 @@ import Api from '../api';
 import ImageC from './image.js';
 import ContainAnswers from './containAnswers.js';
 import HeartsContainer from './heartsContainer.jsx';
+import Timer from './timer';
 
 class Show extends Component {
 
@@ -66,6 +67,7 @@ class Show extends Component {
 				<ImageC src={this.state.image} />
 				<HeartsContainer />
 				<ContainAnswers answers={this.state.answers} restart={this.restart} />
+				<Timer />
 			</div>
 		);
 	}
