@@ -15,7 +15,7 @@ class HeartsContainer extends Component {
 
     componentWillReceiveProps({lives}) {
         
-        this.setState({lives : lives.lives});
+        this.setState({lives : lives});
     }
  
     /*initialState() {

@@ -7,7 +7,7 @@ const mapDispatchToProps = {
   }
 
 const mapStateToProps = ({lives}) => {
-    
+    console.log('checkLives',{ lives });
      return { lives }
  }
 
@@ -30,9 +30,9 @@ class ButtonAnswer extends Component {
             return true;
             //this.props.restart();
 		} else {
-            
-            this.setState({classBtn : 'btn-danger', 'lives' : this.state.lives-1});
-            this.props.notGuessed(this.state.lives);
+            this.setState({classBtn : 'btn-danger'});
+            //console.log('decreaseLive',parseInt(this.[rp].lives));
+            this.props.notGuessed(this.props.lives);
             return false;
 		}
 	}

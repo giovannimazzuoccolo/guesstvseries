@@ -20,25 +20,20 @@ function answer(state = initialState, action) {
 }
 
 
-
-
-function lives(state = { 'lives' : 3 }, action) {
+function lives(state = { state : 3 }, action) {
+    console.log('isstupd',state);
     switch(action.type) {
         case 'LOSE_LIFE' : {
-          return Object.assign({}, state, {
-              "lives" : action.lives
-          })
-           
+          return action.lives
         }
         default : 
             return state
     }
-
 } 
 
 
 
 export default combineReducers({
-    answer,
-    lives
+    answer : answer,
+    lives : lives
 });

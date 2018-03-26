@@ -12,6 +12,7 @@ export function receiveAnswer (answer_id)  {
 }
 
 export function loseLife(livesTot) {
+    console.log('livesBeforeAction',livesTot);
     return {
         type : LOSE_LIFE,
         lives : livesTot-1
