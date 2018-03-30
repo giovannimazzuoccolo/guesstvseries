@@ -1,17 +1,20 @@
 import { combineReducers } from 'redux';
-//import { receiveAnswer, loseLife } from '../actions';
 
-const initialState = {
+// AS REFERENCE:
+/*initialState = {
     "lives": 3,
-    "answer" : null
-}
+    "nextQuestion" : false
+}*/
 
-function answer(state = initialState, action) {
+function answer(state = { state : false }, action) {
+    console.log('isstupd',state);
     switch(action.type) {
-        case 'RECEIVE_ANSWER' : {
-            return Object.assign({}, ...state, {
-                answer : action.answer
-            } )
+        case 'CORRECT_ANSWER' : {
+            return action.nextQuestion
+            }
+
+        case 'NEW_ANSWER' : {
+            return action.nextQuestion
         }
 
     default :
@@ -21,7 +24,7 @@ function answer(state = initialState, action) {
 
 
 function lives(state = { state : 3 }, action) {
-    console.log('isstupd',state);
+    
     switch(action.type) {
         case 'LOSE_LIFE' : {
           return action.lives

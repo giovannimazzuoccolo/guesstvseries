@@ -6,35 +6,34 @@ const mapDispatchToProps = {
     notGuessed: loseLife
   }
 
-const mapStateToProps = ({lives}) => {
-     return { lives }
+const mapStateToProps = ({lives, answer}) => {
+     return { lives, answer }
  }
 
 
 class Timer extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         
         this.state = { distance : 100 };
     
     }
 
-    getInitialState() {
-        return {distance : 100}
-    }
-
     componentDidMount() { 
- 
+        
         let countdown = setInterval(() => this.timer(this),200);
         this.setState({countdown: countdown});
     }
     
-   /* componentWillUnmount() {
-        clearInterval(this.state.countdown)
-    }*/
+    componentWillReceiveProps(nextProps) {
+        console.log('i am receiving props!',nextProps);
+       if(nextProps.restart) {
+           console.log('i should update!');
+        this.setState({distance : 100});
+        }
+    }
 
     timer () {
-        console.log('chiamata');
         this.setState({ distance : this.state.distance - 1});
         if(this.state.distance === 0) {
             this.props.notGuessed(this.props.lives);

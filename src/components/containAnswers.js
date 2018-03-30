@@ -23,7 +23,6 @@ class ContainAnswers extends Component {
 	}
 
 	componentWillReceiveProps(nextprops) {
-			 console.log('myprops3',nextprops.answers.rightAnswer.name);
 			
 			let answers = [];
 			answers.push({ id : nextprops.answers.rightAnswer.id, name :  nextprops.answers.rightAnswer.name });
@@ -42,7 +41,7 @@ class ContainAnswers extends Component {
 						//<button key={singleAnswer.id} className={`btn btn-lg btn-block ${result} `}  onClick={(e) => this.tryToGuess(singleAnswer.id,e)}>{singleAnswer.name}</button>
 					)
 			});
-			console.log('myanswers', answerList);
+			//console.log('myanswers', answerList);
 			this.setState({listOfAnswers : answerList})
 			}
 

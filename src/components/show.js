@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { newAnswer } from '../actions/index';
+
 
 //import api
 import Api from '../api';
@@ -11,17 +14,37 @@ import ContainAnswers from './containAnswers.js';
 import HeartsContainer from './heartsContainer.jsx';
 import Timer from './timer';
 
+
+const mapStateToProps = ( {answer} ) => {
+		
+     return {answer};
+ }
+
+ const mapDispatchToProps = {
+	 newAnswer : newAnswer 
+ }
+
+ 
+
 class Show extends Component {
 
 	constructor(props) {
 			super(props);
-			this.state =  { answers: { wrongAnswer1 : { name : null, id : null }, wrongAnswer2 : { name : null, id: null }, rightAnswer: { name: null, id: null} }, image : null, selectedAnswer : null, seriesList : [] };
+			this.state =  { answers: { wrongAnswer1 : { name : null, id : null }, wrongAnswer2 : { name : null, id: null }, rightAnswer: { name: null, id: null} }, image : null, selectedAnswer : null, seriesList : [], resetTimer : 0 };
 		}
+
+		componentWillReceiveProps({answer}) {
+			console.log('triggere2');
+			if(answer) {
+				this.restart();
+			}
+		}
+
 
 	componentDidMount() {
 				const apiKey = Api();
 				const fetchAsyncA = async () => {
-					let response = await fetch('https://api.themoviedb.org/3/discover/tv?api_key='+apiKey+'&language=en-US&sort_by=popularity.desc&page=1&timezone=America%2FNew_York&include_null_first_air_dates=false');
+					let response = await fetch('https://api.themoviedb.org/3/discover/tv?api_key='+apiKey+'&language=en-US&sort_by=popularity.desc&page=2&timezone=America%2FNew_York&include_null_first_air_dates=false');
 
 					let data = await response.json();
 
@@ -32,32 +55,30 @@ class Show extends Component {
 
 	restart() {
 		this.prepareQuestion(this.state.seriesList);
+		this.setState({resetTimer : this.state.resetTimer+1});
+		return true;
 	}
 
 	prepareQuestion(seriesList) {
 		//extract a random movie, save image, title and number.
 		let number = Math.floor(Math.random() * seriesList.length);
 		let rightAnswer =  seriesList[number];
-		//seriesList = seriesList.splice(number, 1);
+		seriesList = seriesList.filter(item => item !== seriesList[number]);
+		
 		
 		//extract other 2 possibles answers, exluding the right one and the same.
-		let number1 = 0;
+		let number1 = Math.floor(Math.random() * seriesList.length);
 		let number2 = 0;
 		do {
 			number2 = Math.floor(Math.random() * seriesList.length);
-		} while (number2 ===! number1 && number2 ===! number);
-		
-		do {
-			number1 = Math.floor(Math.random() * seriesList.length);
-		} while (number2 ===! number1 && number1 ===! number);
-		
+		} while (number2 ===! number1);
 
-		
 
 		let wrongAnswer1 = seriesList[number1];
 		let wrongAnswer2 = seriesList[number2];
-		this.setState({image : rightAnswer.backdrop_path, answers : { rightAnswer : {  name : rightAnswer.name, id : rightAnswer.id  }, wrongAnswer1 : { name : wrongAnswer1.name, id : wrongAnswer1.id }, wrongAnswer2 : { name : wrongAnswer2.name, id: wrongAnswer2.id } }  , seriesList : seriesList, restart : this.restart } );
 
+		this.setState({image : rightAnswer.backdrop_path, answers : { rightAnswer : {  name : rightAnswer.name, id : rightAnswer.id  }, wrongAnswer1 : { name : wrongAnswer1.name, id : wrongAnswer1.id }, wrongAnswer2 : { name : wrongAnswer2.name, id: wrongAnswer2.id } }  , seriesList : seriesList, restart : this.restart, resetTimer : this.state.resetTimer+1 } );
+		this.props.newAnswer();
 	}
 
 	render() {
@@ -67,11 +88,11 @@ class Show extends Component {
 				<ImageC src={this.state.image} />
 				<HeartsContainer />
 				<ContainAnswers answers={this.state.answers} restart={this.restart} />
-				<Timer />
+				<Timer restart={this.state.resetTimer}/>
 			</div>
 		);
 	}
 
 }
 
-export default Show;
+export default connect(mapStateToProps,mapDispatchToProps)(Show);

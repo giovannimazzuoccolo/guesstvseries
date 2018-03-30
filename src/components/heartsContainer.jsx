@@ -18,19 +18,10 @@ class HeartsContainer extends Component {
         this.setState({lives : lives});
     }
  
-    /*initialState() {
-        this.setState({lives : 3});
-    }*/
-
-    //useful later 
-    /*removeHearts() {
-        const countHearts = this.state.lives-1;
-        this.setState({ lives : countHearts });
-    }*/
+    
 
     render () {
         let heartsNumber = this.state.lives;
-        console.log('realstate',this.props.lives);
         
         let listHearts = [];
         for( let i = 0; i < heartsNumber; i++) {

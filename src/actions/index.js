@@ -1,18 +1,24 @@
-const RECEIVE_ANSWER = 'RECEIVE_ANSWER';
+const CORRECT_ANSWER = 'CORRECT_ANSWER';
 const LOSE_LIFE = 'LOSE_LIFE';
-
+const NEW_ANSWER = 'NEW_ANSWER';
 
 // action creators
 
-export function receiveAnswer (answer_id)  {
+export function newAnswer () {
+    return {
+        type : NEW_ANSWER,
+        nextQuestion : false
+    }
+}
+
+export function receiveAnswer ()  {
     return { 
-        type : RECEIVE_ANSWER,
-        answer_id : answer_id
+        type : CORRECT_ANSWER,
+        nextQuestion : true
     }
 }
 
 export function loseLife(livesTot) {
-    console.log('livesBeforeAction',livesTot);
     return {
         type : LOSE_LIFE,
         lives : livesTot-1
