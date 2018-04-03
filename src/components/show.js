@@ -13,7 +13,7 @@ import ImageC from './image.js';
 import ContainAnswers from './containAnswers.js';
 import HeartsContainer from './heartsContainer.jsx';
 import Timer from './timer';
-
+import Points from './points';
 
 const mapStateToProps = ( {answer} ) => {
 		
@@ -68,11 +68,15 @@ class Show extends Component {
 		
 		//extract other 2 possibles answers, exluding the right one and the same.
 		let number1 = Math.floor(Math.random() * seriesList.length);
-		let number2 = 0;
-		do {
-			number2 = Math.floor(Math.random() * seriesList.length);
-		} while (number2 ===! number1);
-
+		let number2 = Math.floor(Math.random() * seriesList.length);
+		
+		if(number1 === number2) {
+			number1 = Math.floor(Math.random() * seriesList.length);
+			while (number2 ===! number1) {
+				number1 = Math.floor(Math.random() * seriesList.length);
+			}
+		}
+		//console.log('numbers, ',number1, number2);
 
 		let wrongAnswer1 = seriesList[number1];
 		let wrongAnswer2 = seriesList[number2];
@@ -84,7 +88,7 @@ class Show extends Component {
 	render() {
 		return(
 			<div>
-				
+				<Points points={this.state.resetTimer-1}/>
 				<ImageC src={this.state.image} />
 				<HeartsContainer />
 				<ContainAnswers answers={this.state.answers} restart={this.restart} />

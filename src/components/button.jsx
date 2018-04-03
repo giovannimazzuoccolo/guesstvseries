@@ -18,25 +18,29 @@ class ButtonAnswer extends Component {
 
     this.state = { classBtn : 'btn-primary', lives : 3 }
 }
-
-   
+    
+   componentWillReceiveProps(newProps) {
+       //this.setState({classBtn : 'btn-primary'});
+       console.log('proprs',newProps);
+   }
 
     tryToGuess(e){
 		if(e === this.props.correctAnswer) {
             this.setState({classBtn : 'btn-success'});
-            this.props.itGuessed(true);
+            
+            setTimeout(() => {this.props.itGuessed(true)},400);
             return true;
 		} else {
             this.setState({classBtn : 'btn-danger'});
+            
             this.props.notGuessed(this.props.lives);
             return false;
 		}
 	}
 
     render() {
-        const btn = this.state.classBtn;
         return (
-        <button  className={`btn btn-lg btn-block max-btn ${btn} `}  onClick={(e) => this.tryToGuess(this.props.dataAnswer.id,e)}>{this.props.dataAnswer.name}</button>
+        <button  className={`btn btn-lg btn-block max-btn ${this.state.classBtn} `}  onClick={(e) => this.tryToGuess(this.props.dataAnswer.id,e)}>{this.props.dataAnswer.name}</button>
         )
     }
 
