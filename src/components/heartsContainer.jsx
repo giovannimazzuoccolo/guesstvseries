@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 const mapStateToProps = ({lives}) => {
-   console.log('isupd',lives);
     return { 'lives' : lives }
 }
 
@@ -14,15 +13,15 @@ class HeartsContainer extends Component {
     }
 
     componentWillReceiveProps({lives}) {
-        
+
         this.setState({lives : lives});
     }
- 
-    
+
+
 
     render () {
         let heartsNumber = this.state.lives;
-        
+
         let listHearts = [];
         for( let i = 0; i < heartsNumber; i++) {
             listHearts.push(<i className="fa fa-heart red-heart" key={i}></i>);
@@ -35,7 +34,7 @@ class HeartsContainer extends Component {
             </div>
         )
     }
-    
+
 }
 
 

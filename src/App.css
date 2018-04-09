@@ -47,6 +47,15 @@ h1 {
     font-size:2rem;
 }
 
+.points {
+  position: absolute;
+  top: 0px;
+  opacity: 0.8;
+  left: 10px;
+  font-size:1.4rem;
+  color: #fff;
+}
+
 .red-heart {
     text-shadow: 0px 0px 9px rgba(11,11,11,0.6);
 }

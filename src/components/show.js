@@ -15,16 +15,16 @@ import HeartsContainer from './heartsContainer.jsx';
 import Timer from './timer';
 import Points from './points';
 
-const mapStateToProps = ( {answer} ) => {
-		
-     return {answer};
+const mapStateToProps = ( {answer,lives} ) => {
+
+     return {answer,lives};
  }
 
  const mapDispatchToProps = {
-	 newAnswer : newAnswer 
+	 newAnswer : newAnswer
  }
 
- 
+
 
 class Show extends Component {
 
@@ -34,7 +34,7 @@ class Show extends Component {
 		}
 
 		componentWillReceiveProps({answer}) {
-			console.log('triggere2');
+
 			if(answer) {
 				this.restart();
 			}
@@ -44,7 +44,7 @@ class Show extends Component {
 	componentDidMount() {
 				const apiKey = Api();
 				const fetchAsyncA = async () => {
-					let response = await fetch('https://api.themoviedb.org/3/discover/tv?api_key='+apiKey+'&language=en-US&sort_by=popularity.desc&page=2&timezone=America%2FNew_York&include_null_first_air_dates=false');
+					let response = await fetch('https://api.themoviedb.org/3/discover/tv?api_key='+apiKey+'&language=en-US&sort_by=popularity.desc&page=1&timezone=America%2FNew_York&include_null_first_air_dates=false');
 
 					let data = await response.json();
 
@@ -54,9 +54,25 @@ class Show extends Component {
 	}
 
 	restart() {
-		this.prepareQuestion(this.state.seriesList);
+		if(this.state.resetTimer % 10 === 0) {
+				this.refetch((this.state.resetTimer/10)+1);
+			} else {
+				this.prepareQuestion(this.state.seriesList);
+			}
 		this.setState({resetTimer : this.state.resetTimer+1});
 		return true;
+	}
+
+	refetch(page) {
+		const apiKey = Api();
+		const fetchAsyncA = async () => {
+			let response = await fetch('https://api.themoviedb.org/3/discover/tv?api_key='+apiKey+'&language=en-US&sort_by=popularity.desc&page='+page+'&timezone=America%2FNew_York&include_null_first_air_dates=false');
+
+			let data = await response.json();
+
+			await this.prepareQuestion(data.results);
+		}
+		fetchAsyncA();
 	}
 
 	prepareQuestion(seriesList) {
@@ -64,12 +80,12 @@ class Show extends Component {
 		let number = Math.floor(Math.random() * seriesList.length);
 		let rightAnswer =  seriesList[number];
 		seriesList = seriesList.filter(item => item !== seriesList[number]);
-		
-		
+
+
 		//extract other 2 possibles answers, exluding the right one and the same.
 		let number1 = Math.floor(Math.random() * seriesList.length);
 		let number2 = Math.floor(Math.random() * seriesList.length);
-		
+
 		if(number1 === number2) {
 			number1 = Math.floor(Math.random() * seriesList.length);
 			while (number2 ===! number1) {
@@ -90,7 +106,7 @@ class Show extends Component {
 			<div>
 				<Points points={this.state.resetTimer-1}/>
 				<ImageC src={this.state.image} />
-				<HeartsContainer />
+				<HeartsContainer  />
 				<ContainAnswers answers={this.state.answers} restart={this.restart} />
 				<Timer restart={this.state.resetTimer}/>
 			</div>
