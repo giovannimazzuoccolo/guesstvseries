@@ -2,38 +2,47 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { newAnswer } from '../actions/index';
 
-
-//import api
+// import api
 import Api from '../api';
 
-
-
-//components
-import ImageC from './image.js';
-import ContainAnswers from './containAnswers.js';
-import HeartsContainer from './heartsContainer.jsx';
+// components
+import ImageC from './image';
+import ContainAnswers from './containAnswers';
+import HeartsContainer from './heartsContainer';
 import Timer from './timer';
 import Points from './points';
+import Gameover from './gameover';
 
-const mapStateToProps = ( {answer,lives} ) => {
+const mapStateToProps = ({ answer, lives }) => ({
+  answer,
+  lives,
+});
 
-     return {answer,lives};
- }
-
- const mapDispatchToProps = {
-	 newAnswer : newAnswer
- }
-
-
+const mapDispatchToProps = { newAnswer };
 
 class Show extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      answers: {
+        wrongAnswer1: {
+          name: null,
+          id: null,
+        },
+        wrongAnswer2: {
+          name: null,
+          id: null,
+        },
+        rightAnswer: {
+	   name: null,
+		  id: null },
+}, image: null, selectedAnswer: null, seriesList: [], resetTimer: 0, gameover: false };
+}
 
-	constructor(props) {
-			super(props);
-			this.state =  { answers: { wrongAnswer1 : { name : null, id : null }, wrongAnswer2 : { name : null, id: null }, rightAnswer: { name: null, id: null} }, image : null, selectedAnswer : null, seriesList : [], resetTimer : 0 };
-		}
-
-		componentWillReceiveProps({answer}) {
+		componentWillReceiveProps({answer, lives}) {
+			if(lives === 0) {
+					this.gameover();
+			}
 
 			if(answer) {
 				this.restart();
@@ -41,9 +50,14 @@ class Show extends Component {
 		}
 
 
+	gameover() {
+		this.setState( {gameover : true} );
+
+	}
+
 	componentDidMount() {
 				const apiKey = Api();
-				const fetchAsyncA = async () => {
+				const fetchAsyncA = async() => {
 					let response = await fetch('https://api.themoviedb.org/3/discover/tv?api_key='+apiKey+'&language=en-US&sort_by=popularity.desc&page=1&timezone=America%2FNew_York&include_null_first_air_dates=false');
 
 					let data = await response.json();
@@ -88,7 +102,7 @@ class Show extends Component {
 
 		if(number1 === number2) {
 			number1 = Math.floor(Math.random() * seriesList.length);
-			while (number2 ===! number1) {
+			while (number2 ==! number1) {
 				number1 = Math.floor(Math.random() * seriesList.length);
 			}
 		}
@@ -109,10 +123,11 @@ class Show extends Component {
 				<HeartsContainer  />
 				<ContainAnswers answers={this.state.answers} restart={this.restart} />
 				<Timer restart={this.state.resetTimer}/>
+				<Gameover trigger={this.state.gameover} points={this.state.resetTimer-1} />
 			</div>
 		);
 	}
 
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(Show);
+export default connect(mapStateToProps, mapDispatchToProps)(Show);
