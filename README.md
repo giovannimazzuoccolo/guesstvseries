@@ -1,7 +1,7 @@
 # guesstvseries
 A Node/React quiz about tv series. Retrive data from [themoviedb.org](https://www.themoviedb.org/) API
 
-[Imgur](https://i.imgur.com/nH9neXN.png)
+![Image of guesstvseries](https://i.imgur.com/nH9neXN.png)
 
 ## make it run
 1. Register and obtain api from [themoviedb.org](https://www.themoviedb.org/) (Free, registration needed)
