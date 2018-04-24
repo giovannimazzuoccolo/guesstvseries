@@ -1,11 +1,10 @@
 import React from 'react';
 
-const points = ({points}) => {
+const showPoints = ({ points }) => {
+  if (points > 0) {
+    return (<div className="points">{points}</div>);
+  }
+  return ('');
+};
 
-    if(points < 1) {
-      points = "";
-    }
-    return (<div className='points'>{points}</div>)
-}
-
-export default points;
+export default showPoints;

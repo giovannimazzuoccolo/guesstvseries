@@ -1,23 +1,21 @@
 import React, { Component } from 'react';
-import Show from './components/show.js';
+import { Provider } from 'react-redux';
+import Show from './components/show';
 import './App.css';
 import store from './store/index';
-import { Provider } from 'react-redux';
 
-
-console.log('mystore',store);
 
 class App extends Component {
   render() {
     return (
-   <Provider store={store}> 
-    <div className="container">
-      <h1 className='push-center'>Guess the Tv Series</h1>
-      <div className='col-6 offset-3'>
-         <Show />
+      <Provider store={store}>
+        <div className="container">
+       <h1 className="push-center">Guess the Tv Series</h1>
+       <div className="col-6 offset-3">
+        <Show />
       </div>
      </div>
-     </Provider>
+      </Provider>
     );
   }
 }
