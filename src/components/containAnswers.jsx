@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import ButtonAnswer from './button';
 
@@ -54,5 +55,12 @@ class ContainAnswers extends Component {
   }
 }
 
-
 export default ContainAnswers;
+
+ContainAnswers.propTypes = {
+  restart: PropTypes.func,
+};
+
+ContainAnswers.defaultProps = {
+  restart: this.props.restart(),
+};

@@ -29,6 +29,10 @@ class Timer extends Component {
     }
   }
 
+  componentWillUnmount() {
+    clearInterval(this.timer(this));
+  }
+
   timer() {
     this.setState({ distance: this.state.distance - 1 });
     if (this.state.distance === 0) {
