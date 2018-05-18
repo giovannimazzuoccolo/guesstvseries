@@ -62,5 +62,5 @@ ContainAnswers.propTypes = {
 };
 
 ContainAnswers.defaultProps = {
-  restart: this.props.restart(),
+  restart: () => {},
 };
