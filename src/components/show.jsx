@@ -91,7 +91,7 @@ class Show extends Component {
 
       const data = await response.json();
 
-      await this.prepareQuestion(data.results);
+      this.prepareQuestion(data.results);
     };
     fetchAsyncA();
   }

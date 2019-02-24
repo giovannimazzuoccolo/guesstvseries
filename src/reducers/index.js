@@ -7,7 +7,6 @@ import { combineReducers } from 'redux';
 } */
 
 function answer(state = { state: false }, action) {
-  console.log('isstupd', state);
   switch (action.type) {
     case 'CORRECT_ANSWER': {
       return action.nextQuestion;
